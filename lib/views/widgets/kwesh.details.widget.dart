@@ -37,18 +37,16 @@ class KweshDetailsWidget extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.block,
-                          color: Colors.grey.shade700,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                         const SizedBox(width: 10),
                         Flexible(
                           child: Text(
                             'Bloquer ${kweshViewModel.kwesh.author.username}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(
-                                  color: Colors.grey.shade700,
-                                ),
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                           ),
                         ),
                       ],
@@ -74,19 +72,19 @@ class KweshDetailsWidget extends StatelessWidget {
                   ),
                   child: Container(
                     padding: const EdgeInsets.all(8),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(
                           Icons.flag,
                           color: Colors.red,
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         Text(
                           'Report',
-                          style:
-                              Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    color: Colors.red,
-                                  ),
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.red,
+                          ),
                         ),
                       ],
                     ),

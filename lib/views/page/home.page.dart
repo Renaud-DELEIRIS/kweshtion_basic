@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
                     child: FloatingActionButton(
                       onPressed: () {},
                       backgroundColor: Colors.amber,
-                      child: Icon(
+                      child: const Icon(
                         Icons.add,
                         size: 28,
                       ),
@@ -53,14 +53,14 @@ class HomePage extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text('Pour vous'),
+        title: const Text('Pour vous'),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () => AutoRouter.of(context).pushNamed('/history'),
           ),
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: () => AutoRouter.of(context).pushNamed('/history'),
           ),
         ],

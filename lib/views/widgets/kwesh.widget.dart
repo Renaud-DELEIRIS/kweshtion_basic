@@ -40,7 +40,12 @@ class KweshWidget extends StatelessWidget {
                 Flexible(
                   child: Text(
                     kweshViewModel.kwesh.question,
-                    style: Theme.of(context).textTheme.displayMedium,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 20,
+                      height: 1.4,
+                      fontWeight: FontWeight.w500,
+                    ),
                     textAlign: TextAlign.start,
                   ),
                 ),
@@ -156,7 +161,7 @@ class KweshWidget extends StatelessWidget {
                                   maintainState: true,
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 12.0),
-                                    child: Container(
+                                    child: SizedBox(
                                       width: answerWidth.toDouble(),
                                       child: Text.rich(
                                         textAlign: TextAlign.right,
@@ -196,7 +201,7 @@ class KweshWidget extends StatelessWidget {
                                     ),
                                   ),
                                 if (!isAnswered && isSelected)
-                                  Icon(
+                                  const Icon(
                                     Icons.check_circle,
                                     size: 20,
                                     color: Colors.amber,
@@ -231,7 +236,7 @@ class KweshWidget extends StatelessWidget {
                 ),
               );
             }).toList(),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
 
@@ -243,12 +248,12 @@ class KweshWidget extends StatelessWidget {
                           kweshViewModel.answer == null
                       ? () => kweshViewModel.answerKwesh()
                       : null,
-                  child: Text("Vote"),
+                  child: const Text("Vote"),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 IconButton(
                   onPressed: () => kweshViewModel.showDetails(context),
-                  icon: Icon(Icons.more_horiz),
+                  icon: const Icon(Icons.more_horiz),
                 )
               ],
             )

@@ -20,9 +20,10 @@ class TagWidget extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Text(
           tagDisplayData.icon + ' ' + tagDisplayData.name,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: Theme.of(context).colorScheme.background,
-              ),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+          ),
         ),
       ),
     );
