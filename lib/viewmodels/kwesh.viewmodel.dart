@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/api/models/response/answer.model.dart';
 import 'package:kweshtion_basic/api/models/response/kwesh.model.dart';
 import 'package:kweshtion_basic/services/kwesh.service.dart';
+import 'package:kweshtion_basic/views/widgets/kwesh.details.widget.dart';
 
 class KweshViewModel extends ChangeNotifier {
   KweshModel kwesh;
@@ -74,4 +75,13 @@ class KweshViewModel extends ChangeNotifier {
         (previousValue, element) =>
             previousValue > element.nbVotes ? previousValue : element.nbVotes,
       );
+
+  void showDetails(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (context) => const KweshDetailsWidget(),
+    );
+  }
 }

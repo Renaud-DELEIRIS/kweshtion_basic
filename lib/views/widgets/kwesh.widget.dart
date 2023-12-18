@@ -203,12 +203,22 @@ class KweshWidget extends StatelessWidget {
               height: 10,
             ),
 
-            if (kweshViewModel.answer == null)
-              ElevatedButton(
-                  onPressed: kweshViewModel.selectedAnswer != null
-                      ? () => kweshViewModel.answerKwesh()
-                      : null,
-                  child: Text("Vote"))
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: kweshViewModel.selectedAnswer != null ||
+                            kweshViewModel.answer == null
+                        ? () => kweshViewModel.answerKwesh()
+                        : null,
+                    child: Text("Vote")),
+                SizedBox(width: 10),
+                IconButton(
+                  onPressed: () => kweshViewModel.showDetails(context),
+                  icon: Icon(Icons.more_horiz),
+                )
+              ],
+            )
           ],
         ),
       ),
