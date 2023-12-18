@@ -6,16 +6,19 @@ ThemeData lightTheme = ThemeData(
     color: Colors.black,
   ),
   colorScheme: ColorScheme.light(
-    background: Colors.white,
-    primary: Colors.grey.shade200,
+    background: Colors.grey.shade50,
+    // #373c3f
+    primary: Color.fromRGBO(55, 60, 63, 1),
     secondary: Colors.grey.shade400,
     tertiary: Colors.grey.shade200,
-    onPrimary: Colors.grey.shade900,
+    // #1C1C1C
+    onPrimary: Color.fromRGBO(28, 28, 28, 1),
   ),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.transparent,
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.white,
     elevation: 0,
     foregroundColor: Colors.black,
+    scrolledUnderElevation: 0,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -25,9 +28,11 @@ ThemeData lightTheme = ThemeData(
   ),
   textTheme: TextTheme(
     displayMedium: const TextStyle(
-      fontSize: 28,
+      fontSize: 20,
       height: 1.4,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w500,
+      // #1a1a1b
+      color: Color.fromRGBO(26, 26, 27, 1),
     ),
     labelMedium: TextStyle(
       fontSize: 28,

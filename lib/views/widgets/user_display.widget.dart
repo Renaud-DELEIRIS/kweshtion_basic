@@ -15,15 +15,26 @@ class UserDisplayWidget extends StatelessWidget {
         CircleAvatar(
           backgroundImage:
               user.avatar != null ? NetworkImage(user.avatar!) : null,
-          radius: 15,
+          radius: 12,
           backgroundColor: Colors.primaries[user.username.length % 10],
           child: Text(
             user.username[0].toUpperCase(),
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
           ),
         ),
         SizedBox(width: 5),
-        Text(user.username),
+        Text(
+          user.username,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+        ),
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/enum/tag.enum.dart';
 
 class TagDisplayData {
@@ -55,7 +56,8 @@ class TagDisplayData {
   get color {
     switch (_tag) {
       case Tag.decideForMe:
-        return 0xFFE0E0E0;
+        // #0079d3
+        return const Color.fromRGBO(0, 121, 211, 1).value;
       case Tag.hypothetical:
         return 0xFFE0E0E0;
       case Tag.politicsAndLaws:

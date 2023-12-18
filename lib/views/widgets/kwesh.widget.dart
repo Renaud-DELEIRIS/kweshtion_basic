@@ -31,33 +31,45 @@ class KweshWidget extends StatelessWidget {
                   ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
 
-            Text.rich(
-              TextSpan(
-                style: Theme.of(context).textTheme.displayMedium,
-                children: [
-                  WidgetSpan(child: TagWidget(tag: kweshViewModel.kwesh.tag)),
-                  WidgetSpan(child: SizedBox(width: 10)),
-                  TextSpan(
-                    text: kweshViewModel.kwesh.question,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Flexible(
+                  child: Text(
+                    kweshViewModel.kwesh.question,
+                    style: Theme.of(context).textTheme.displayMedium,
+                    textAlign: TextAlign.start,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+
+            const SizedBox(height: 5),
+
+            TagWidget(tag: kweshViewModel.kwesh.tag),
+
             const SizedBox(height: 10),
 
             // Total vote
             Text.rich(
               TextSpan(
-                style: Theme.of(context).textTheme.titleSmall,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 13,
+                ),
                 children: [
                   WidgetSpan(
                     alignment: PlaceholderAlignment.middle,
                     child: AnimatedCount(
                       count: kweshViewModel.totalVotes,
                       duration: const Duration(milliseconds: 500),
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                   TextSpan(
@@ -67,7 +79,7 @@ class KweshWidget extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 5),
 
             // List of answers
             ...kweshViewModel.kwesh.answers.map((answer) {
@@ -84,28 +96,28 @@ class KweshWidget extends StatelessWidget {
                           : kweshViewModel.totalVotes)
                   : 0.0;
 
-              int answerWidth = kweshViewModel.maxAnswerWidth * 24;
+              int answerWidth = kweshViewModel.maxAnswerWidth * 12;
 
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: GestureDetector(
-                  onTap: () {
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: TextButton(
+                  onPressed: () {
                     if (!isAnswered) {
                       kweshViewModel.setSelectedAnswer(answer.id);
                     } else {
                       kweshViewModel.resetAnswer();
                     }
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.secondary,
-                        width: 2,
-                      ),
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 4),
                     ),
+                    overlayColor: MaterialStateProperty.all(
+                      Colors.grey.withOpacity(0.1),
+                    ),
+                  ),
+                  child: SizedBox(
                     height: height,
-                    width: MediaQuery.of(context).size.width,
                     child: Stack(
                       children: [
                         AnimatedFractionallySizedBox(
@@ -115,8 +127,15 @@ class KweshWidget extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               color: isTheMaxVoted
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Theme.of(context).colorScheme.primary,
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.3)
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ),
@@ -127,6 +146,9 @@ class KweshWidget extends StatelessWidget {
                               horizontal: 8.0,
                             ),
                             child: Row(
+                              crossAxisAlignment: isAnswered
+                                  ? CrossAxisAlignment.center
+                                  : CrossAxisAlignment.start,
                               children: [
                                 Visibility(
                                   visible: isAnswered,
@@ -139,15 +161,18 @@ class KweshWidget extends StatelessWidget {
                                       child: Text.rich(
                                         textAlign: TextAlign.right,
                                         TextSpan(
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall,
                                           children: [
                                             WidgetSpan(
                                               child: AnimatedCount(
                                                 count: isAnswered
                                                     ? answer.nbVotes
                                                     : 0,
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onPrimary,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -158,8 +183,8 @@ class KweshWidget extends StatelessWidget {
                                 ),
                                 if (!isAnswered && !isSelected)
                                   Container(
-                                    height: 20,
-                                    width: 20,
+                                    height: 18,
+                                    width: 18,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
@@ -176,11 +201,18 @@ class KweshWidget extends StatelessWidget {
                                     size: 20,
                                     color: Colors.amber,
                                   ),
-                                if (!isAnswered) const SizedBox(width: 12.0),
-                                Text(
-                                  answer.answer,
-                                  style:
-                                      Theme.of(context).textTheme.labelMedium,
+                                if (!isAnswered) const SizedBox(width: 8.0),
+                                Flexible(
+                                  child: Text(
+                                    answer.answer,
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
                                 ),
                                 if (isTheAnswer) const SizedBox(width: 12.0),
                                 if (isTheAnswer)
@@ -207,11 +239,12 @@ class KweshWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ElevatedButton(
-                    onPressed: kweshViewModel.selectedAnswer != null ||
-                            kweshViewModel.answer == null
-                        ? () => kweshViewModel.answerKwesh()
-                        : null,
-                    child: Text("Vote")),
+                  onPressed: kweshViewModel.selectedAnswer != null &&
+                          kweshViewModel.answer == null
+                      ? () => kweshViewModel.answerKwesh()
+                      : null,
+                  child: Text("Vote"),
+                ),
                 SizedBox(width: 10),
                 IconButton(
                   onPressed: () => kweshViewModel.showDetails(context),

@@ -12,7 +12,8 @@ import 'package:provider/provider.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +34,14 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 60,
-                    height: 60,
+                    width: 40,
+                    height: 40,
                     child: FloatingActionButton(
                       onPressed: () {},
                       backgroundColor: Colors.amber,
                       child: Icon(
                         Icons.add,
-                        size: 36,
+                        size: 28,
                       ),
                     ),
                   ),
@@ -52,8 +53,12 @@ class HomePage extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Pour vous'),
         actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () => AutoRouter.of(context).pushNamed('/history'),
+          ),
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () => AutoRouter.of(context).pushNamed('/history'),
@@ -63,6 +68,7 @@ class HomePage extends StatelessWidget {
       body: PageView.builder(
         itemCount: 10,
         scrollDirection: Axis.vertical,
+        controller: _pageController,
         itemBuilder: (context, index) {
           return ChangeNotifierProvider<KweshViewModel>(
             create: (context) => KweshViewModel.init(
@@ -109,6 +115,8 @@ class HomePage extends StatelessWidget {
                   username: 'renauddeliris',
                 ),
               ),
+              _pageController,
+              index,
             ),
             builder: (context, child) {
               final vm = Provider.of<KweshViewModel>(context);

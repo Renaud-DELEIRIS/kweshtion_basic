@@ -1,66 +1,104 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:kweshtion_basic/views/widgets/inputs/input.widget.dart';
+import 'package:kweshtion_basic/viewmodels/kwesh.viewmodel.dart';
 
-class KweshDetailsWidget extends StatefulWidget {
-  const KweshDetailsWidget({Key? key}) : super(key: key);
-
-  @override
-  _KweshDetailsWidgetState createState() => _KweshDetailsWidgetState();
-}
-
-class _KweshDetailsWidgetState extends State<KweshDetailsWidget> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+class KweshDetailsWidget extends StatelessWidget {
+  const KweshDetailsWidget({Key? key, required this.kweshViewModel})
+      : super(key: key);
+  final KweshViewModel kweshViewModel;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Container(
-          height: 325,
-          padding: const EdgeInsets.all(16),
-          child: FormBuilder(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+      child: Container(
+        height: 325,
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Column(
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    InputWidget(
-                      name: 'username',
-                      labelText: 'Nom d utilisateur',
-                      errorText: 'le nom d utilisateur est obligatoire',
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    kweshViewModel.hideAuthorKwesh();
+                  },
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.all(0),
                     ),
-                    SizedBox(
-                      height: 14,
+                    overlayColor: MaterialStateProperty.all(
+                      Colors.grey.withOpacity(0.1),
                     ),
-                    InputWidget(
-                      name: 'email',
-                      labelText: 'E-mail',
-                      errorText: 'l email est obbligatoire',
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.block,
+                          color: Colors.grey.shade700,
+                        ),
+                        const SizedBox(width: 10),
+                        Flexible(
+                          child: Text(
+                            'Bloquer ${kweshViewModel.kwesh.author.username}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                  color: Colors.grey.shade700,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 14,
-                    ),
-                    InputWidget(
-                      name: 'password',
-                      labelText: 'Mot de passe',
-                      errorText: 'Mot de passe est obligatoire',
-                      secure: true,
-                    ),
-                  ],
+                  ),
                 ),
-                SizedBox(
-                  height: 14,
+                Container(
+                  height: 0.5,
+                  color: Colors.grey,
                 ),
-                Text('test')
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    kweshViewModel.reportKwesh();
+                  },
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.all(0),
+                    ),
+                    overlayColor: MaterialStateProperty.all(
+                      Colors.grey.withOpacity(0.1),
+                    ),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.flag,
+                          color: Colors.red,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Report',
+                          style:
+                              Theme.of(context).textTheme.titleSmall!.copyWith(
+                                    color: Colors.red,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 0.5,
+                  color: Colors.grey,
+                ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

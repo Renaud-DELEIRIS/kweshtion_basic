@@ -8,14 +8,24 @@ class KweshViewModel extends ChangeNotifier {
   KweshModel kwesh;
   String? answer;
   String? _selectedAnswer;
+  final PageController pageController;
   final KweshService _kweshService = KweshService.injected();
+  final int pageIndex;
 
-  KweshViewModel({required this.kwesh}) {
+  KweshViewModel(
+      {required this.kwesh,
+      required this.pageController,
+      required this.pageIndex}) {
     getKwesh();
   }
 
-  factory KweshViewModel.init(KweshModel kwesh) {
-    return KweshViewModel(kwesh: kwesh);
+  factory KweshViewModel.init(
+      KweshModel kwesh, PageController controller, int pageIndex) {
+    return KweshViewModel(
+      kwesh: kwesh,
+      pageController: controller,
+      pageIndex: pageIndex,
+    );
   }
 
   Future<void> getKwesh() async {
@@ -81,7 +91,27 @@ class KweshViewModel extends ChangeNotifier {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      builder: (context) => const KweshDetailsWidget(),
+      builder: (context) => KweshDetailsWidget(
+        kweshViewModel: this,
+      ),
+    );
+  }
+
+  void reportKwesh() {
+    // Scroll to the next page
+    pageController.animateToPage(
+      pageIndex + 1,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void hideAuthorKwesh() {
+    // Scroll to the next page
+    pageController.animateToPage(
+      pageIndex + 1,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
     );
   }
 }
