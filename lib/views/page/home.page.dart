@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/api/models/response/answer.model.dart';
@@ -7,6 +5,7 @@ import 'package:kweshtion_basic/api/models/response/category.model.dart';
 import 'package:kweshtion_basic/api/models/response/kwesh.model.dart';
 import 'package:kweshtion_basic/api/models/response/user.model.dart';
 import 'package:kweshtion_basic/viewmodels/kwesh.viewmodel.dart';
+import 'package:kweshtion_basic/views/page/create.page.dart';
 import 'package:kweshtion_basic/views/widgets/kwesh.widget.dart';
 import 'package:provider/provider.dart';
 
@@ -15,40 +14,28 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   final PageController _pageController = PageController();
 
+  // TODO Add query control first kwesh draw
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(30),
-          ),
-        ),
-        child: ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: FloatingActionButton(
-                      onPressed: () {},
-                      backgroundColor: Colors.amber,
-                      child: const Icon(
-                        Icons.add,
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            isScrollControlled: true,
+            enableDrag: true,
+            useSafeArea: true,
+            builder: (context) => const CreatePage(),
+          );
+        },
+        backgroundColor: Colors.amber.shade700,
+        child: const Icon(
+          Icons.add,
+          size: 28,
+          color: Colors.white,
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -57,10 +44,10 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () => AutoRouter.of(context).pushNamed('/history'),
+            onPressed: () => AutoRouter.of(context).pushNamed('/search'),
           ),
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.history),
             onPressed: () => AutoRouter.of(context).pushNamed('/history'),
           ),
         ],
@@ -69,10 +56,12 @@ class HomePage extends StatelessWidget {
         itemCount: 10,
         scrollDirection: Axis.vertical,
         controller: _pageController,
+        pageSnapping: true,
         itemBuilder: (context, index) {
           return ChangeNotifierProvider<KweshViewModel>(
             create: (context) => KweshViewModel.init(
               KweshModel(
+                answer: null,
                 id: '1',
                 question: 'What is the meaning of life?',
                 answers: [
@@ -95,6 +84,7 @@ class HomePage extends StatelessWidget {
                 createdAt: DateTime.now(),
                 updatedAt: DateTime.now(),
                 category: CategoryModel(
+                  like: 34,
                   id: '1',
                   author: UserModel(
                     createdAt: DateTime.now(),

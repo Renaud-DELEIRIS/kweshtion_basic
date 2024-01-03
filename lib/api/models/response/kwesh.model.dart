@@ -17,6 +17,9 @@ class KweshModel {
     required this.createdAt,
     required this.updatedAt,
     required this.author,
+    required this.answer,
+    this.skipped,
+    this.expiresAt,
     this.category,
     this.tag = Tag.other,
   });
@@ -32,6 +35,9 @@ class KweshModel {
   final UserModel author;
   final CategoryModel? category;
   final Tag tag;
+  final String? answer;
+  final DateTime? expiresAt;
+  final bool? skipped;
 
   Map<String, dynamic> toJson() => _$KweshModelToJson(this);
 }

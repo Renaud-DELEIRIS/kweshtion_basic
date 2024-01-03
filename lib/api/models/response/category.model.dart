@@ -11,6 +11,7 @@ class CategoryModel {
     required this.createdAt,
     required this.updatedAt,
     required this.author,
+    required this.like,
     this.avatar,
   });
 
@@ -23,6 +24,7 @@ class CategoryModel {
   final DateTime updatedAt;
   final UserModel author;
   final String? avatar;
+  final int like;
 
   Map<String, dynamic> toJson() => _$CategoryModelToJson(this);
 }

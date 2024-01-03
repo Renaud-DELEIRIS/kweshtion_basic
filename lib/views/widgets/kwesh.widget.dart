@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/viewmodels/kwesh.viewmodel.dart';
 import 'package:kweshtion_basic/views/widgets/animated_count.widget.dart';
 import 'package:kweshtion_basic/views/widgets/category_display.widget.dart';
+import 'package:kweshtion_basic/views/widgets/kwesh/kwesh_answer.widget.dart';
 import 'package:kweshtion_basic/views/widgets/tag.widget.dart';
 import 'package:kweshtion_basic/views/widgets/user_display.widget.dart';
 
@@ -54,7 +55,16 @@ class KweshWidget extends StatelessWidget {
 
             const SizedBox(height: 5),
 
-            TagWidget(tag: kweshViewModel.kwesh.tag),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TagWidget(tag: kweshViewModel.kwesh.tag),
+                IconButton(
+                  onPressed: () => kweshViewModel.showDetails(context),
+                  icon: const Icon(Icons.more_horiz),
+                )
+              ],
+            ),
 
             const SizedBox(height: 10),
 
@@ -88,9 +98,10 @@ class KweshWidget extends StatelessWidget {
 
             // List of answers
             ...kweshViewModel.kwesh.answers.map((answer) {
-              bool isAnswered = kweshViewModel.answer != null;
+              // or skipped
+              bool isAnswered = kweshViewModel.answer != null ||
+                  kweshViewModel.kwesh.skipped == true;
               bool isTheAnswer = kweshViewModel.answer == answer.id;
-              bool isSelected = kweshViewModel.selectedAnswer == answer.id;
               bool isTheMaxVoted = kweshViewModel.maxVote == answer.nbVotes;
               // bool isMaxVoted = kweshViewModel.kwesh.answers
 
@@ -103,160 +114,60 @@ class KweshWidget extends StatelessWidget {
 
               int answerWidth = kweshViewModel.maxAnswerWidth * 12;
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: TextButton(
-                  onPressed: () {
-                    if (!isAnswered) {
-                      kweshViewModel.setSelectedAnswer(answer.id);
-                    } else {
-                      kweshViewModel.resetAnswer();
-                    }
-                  },
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(vertical: 4),
-                    ),
-                    overlayColor: MaterialStateProperty.all(
-                      Colors.grey.withOpacity(0.1),
-                    ),
-                  ),
-                  child: SizedBox(
-                    height: height,
-                    child: Stack(
-                      children: [
-                        AnimatedFractionallySizedBox(
-                          duration: const Duration(milliseconds: 500),
-                          heightFactor: 1,
-                          widthFactor: widthFactor,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: isTheMaxVoted
-                                  ? Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.3)
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: isAnswered
-                                  ? CrossAxisAlignment.center
-                                  : CrossAxisAlignment.start,
-                              children: [
-                                Visibility(
-                                  visible: isAnswered,
-                                  maintainAnimation: true,
-                                  maintainState: true,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    child: SizedBox(
-                                      width: answerWidth.toDouble(),
-                                      child: Text.rich(
-                                        textAlign: TextAlign.right,
-                                        TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: AnimatedCount(
-                                                count: isAnswered
-                                                    ? answer.nbVotes
-                                                    : 0,
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                if (!isAnswered && !isSelected)
-                                  Container(
-                                    height: 18,
-                                    width: 18,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        width: 2,
-                                      ),
-                                    ),
-                                  ),
-                                if (!isAnswered && isSelected)
-                                  const Icon(
-                                    Icons.check_circle,
-                                    size: 20,
-                                    color: Colors.amber,
-                                  ),
-                                if (!isAnswered) const SizedBox(width: 8.0),
-                                Flexible(
-                                  child: Text(
-                                    answer.answer,
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ),
-                                if (isTheAnswer) const SizedBox(width: 12.0),
-                                if (isTheAnswer)
-                                  Icon(
-                                    Icons.check_circle,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              return KweshAnswerWidget(
+                isAnswered: isAnswered,
+                isTheAnswer: isTheAnswer,
+                isTheMaxVoted: isTheMaxVoted,
+                answer: answer.answer,
+                withCheckmark: true,
+                answerWidth: answerWidth.toDouble(),
+                nbVotes: answer.nbVotes,
+                widthFactor: widthFactor,
+                onClick: () {
+                  if (isAnswered) {
+                    kweshViewModel.resetAnswer();
+                  } else {
+                    kweshViewModel.answerKwesh(answer.id);
+                  }
+                },
               );
             }).toList(),
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
-
+            // Skip button
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ElevatedButton(
-                  onPressed: kweshViewModel.selectedAnswer != null &&
-                          kweshViewModel.answer == null
-                      ? () => kweshViewModel.answerKwesh()
-                      : null,
-                  child: const Text("Vote"),
+                TextButton(
+                  onPressed: kweshViewModel.answer != null ||
+                          kweshViewModel.kwesh.skipped == true
+                      ? null
+                      : kweshViewModel.skipKwesh,
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.grey.shade500,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Row(
+                    children: [
+                      Text(
+                        "Skip",
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Icon(
+                        Icons.chevron_right,
+                        size: 20,
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 10),
-                IconButton(
-                  onPressed: () => kweshViewModel.showDetails(context),
-                  icon: const Icon(Icons.more_horiz),
-                )
               ],
-            )
+            ),
           ],
         ),
       ),

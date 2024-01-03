@@ -19,6 +19,12 @@ abstract class _$KweshModelCWProxy {
 
   KweshModel author(UserModel author);
 
+  KweshModel answer(String? answer);
+
+  KweshModel skipped(bool? skipped);
+
+  KweshModel expiresAt(DateTime? expiresAt);
+
   KweshModel category(CategoryModel? category);
 
   KweshModel tag(Tag tag);
@@ -36,6 +42,9 @@ abstract class _$KweshModelCWProxy {
     DateTime? createdAt,
     DateTime? updatedAt,
     UserModel? author,
+    String? answer,
+    bool? skipped,
+    DateTime? expiresAt,
     CategoryModel? category,
     Tag? tag,
   });
@@ -66,6 +75,15 @@ class _$KweshModelCWProxyImpl implements _$KweshModelCWProxy {
   KweshModel author(UserModel author) => this(author: author);
 
   @override
+  KweshModel answer(String? answer) => this(answer: answer);
+
+  @override
+  KweshModel skipped(bool? skipped) => this(skipped: skipped);
+
+  @override
+  KweshModel expiresAt(DateTime? expiresAt) => this(expiresAt: expiresAt);
+
+  @override
   KweshModel category(CategoryModel? category) => this(category: category);
 
   @override
@@ -86,6 +104,9 @@ class _$KweshModelCWProxyImpl implements _$KweshModelCWProxy {
     Object? createdAt = const $CopyWithPlaceholder(),
     Object? updatedAt = const $CopyWithPlaceholder(),
     Object? author = const $CopyWithPlaceholder(),
+    Object? answer = const $CopyWithPlaceholder(),
+    Object? skipped = const $CopyWithPlaceholder(),
+    Object? expiresAt = const $CopyWithPlaceholder(),
     Object? category = const $CopyWithPlaceholder(),
     Object? tag = const $CopyWithPlaceholder(),
   }) {
@@ -114,6 +135,18 @@ class _$KweshModelCWProxyImpl implements _$KweshModelCWProxy {
           ? _value.author
           // ignore: cast_nullable_to_non_nullable
           : author as UserModel,
+      answer: answer == const $CopyWithPlaceholder()
+          ? _value.answer
+          // ignore: cast_nullable_to_non_nullable
+          : answer as String?,
+      skipped: skipped == const $CopyWithPlaceholder()
+          ? _value.skipped
+          // ignore: cast_nullable_to_non_nullable
+          : skipped as bool?,
+      expiresAt: expiresAt == const $CopyWithPlaceholder()
+          ? _value.expiresAt
+          // ignore: cast_nullable_to_non_nullable
+          : expiresAt as DateTime?,
       category: category == const $CopyWithPlaceholder()
           ? _value.category
           // ignore: cast_nullable_to_non_nullable
@@ -145,6 +178,11 @@ KweshModel _$KweshModelFromJson(Map<String, dynamic> json) => KweshModel(
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
       author: UserModel.fromJson(json['author'] as Map<String, dynamic>),
+      answer: json['answer'] as String?,
+      skipped: json['skipped'] as bool?,
+      expiresAt: json['expiresAt'] == null
+          ? null
+          : DateTime.parse(json['expiresAt'] as String),
       category: json['category'] == null
           ? null
           : CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
@@ -161,6 +199,9 @@ Map<String, dynamic> _$KweshModelToJson(KweshModel instance) =>
       'author': instance.author,
       'category': instance.category,
       'tag': _$TagEnumMap[instance.tag]!,
+      'answer': instance.answer,
+      'expiresAt': instance.expiresAt?.toIso8601String(),
+      'skipped': instance.skipped,
     };
 
 const _$TagEnumMap = {

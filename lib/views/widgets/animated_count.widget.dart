@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AnimatedCount extends ImplicitlyAnimatedWidget {
-  AnimatedCount({
+  const AnimatedCount({
     Key? key,
     required this.count,
     Duration duration = const Duration(milliseconds: 600),

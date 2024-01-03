@@ -26,7 +26,7 @@ class UserDisplayWidget extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         Text(
           user.username,
           style: TextStyle(

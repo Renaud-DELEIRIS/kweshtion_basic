@@ -13,6 +13,7 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
       author: UserModel.fromJson(json['author'] as Map<String, dynamic>),
+      like: json['like'] as int,
       avatar: json['avatar'] as String?,
     );
 
@@ -24,4 +25,5 @@ Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) =>
       'updatedAt': instance.updatedAt.toIso8601String(),
       'author': instance.author,
       'avatar': instance.avatar,
+      'like': instance.like,
     };

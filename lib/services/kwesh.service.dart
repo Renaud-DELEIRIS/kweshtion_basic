@@ -17,13 +17,14 @@ class KweshService {
 
   Future<KweshModel> getKwesh(String id) async {
     return KweshModel(
+      answer: null,
       id: '1',
       question:
           'Which Billionaire would you rather be the president of your nation?',
       answers: [
         AnswerModel(
           id: '1',
-          answer: 'Elon Musk',
+          answer: 'Elon Musk and his fucking crypto named dogecoin',
           nbVotes: 561,
         ),
         AnswerModel(
@@ -55,6 +56,7 @@ class KweshService {
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       category: CategoryModel(
+        like: 20,
         id: '1',
         author: UserModel(
           createdAt: DateTime.now(),
@@ -80,5 +82,9 @@ class KweshService {
 
   Future<KweshModel> answerKwesh(String id, String answerId) async {
     return getKwesh(answerId);
+  }
+
+  Future<KweshModel> skipKwesh(String id) async {
+    return getKwesh(id);
   }
 }

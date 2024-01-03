@@ -4,24 +4,29 @@ import 'package:kweshtion_basic/api/models/response/category.model.dart';
 
 class CategoryDisplayWidget extends StatelessWidget {
   final CategoryModel category;
+  final withRedirect;
 
-  const CategoryDisplayWidget({Key? key, required this.category})
+  const CategoryDisplayWidget(
+      {Key? key, required this.category, this.withRedirect = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         TextButton(
-          onPressed: () =>
-              AutoRouter.of(context).navigateNamed('/category/${category.id}'),
+          onPressed: withRedirect
+              ? () => AutoRouter.of(context)
+                  .navigateNamed('/category/${category.id}')
+              : null,
 
           // Width fit
 
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            minimumSize: Size(0, 0),
+            minimumSize: const Size(0, 0),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +46,7 @@ class CategoryDisplayWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
               Text(
                 category.name,
                 style: TextStyle(
@@ -50,6 +55,7 @@ class CategoryDisplayWidget extends StatelessWidget {
                   fontSize: 12,
                 ),
               ),
+              const SizedBox(width: 5),
             ],
           ),
         ),

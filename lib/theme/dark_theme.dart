@@ -7,10 +7,9 @@ ThemeData darkTheme = ThemeData(
   ),
   colorScheme: ColorScheme.dark(
     background: Colors.grey.shade900,
-    primary: const Color.fromRGBO(
-        255, 255, 255, 1), // White color for dark theme primary
+    primary: Colors.grey.shade800,
     secondary: Colors.grey.shade700,
-    tertiary: Colors.grey.shade500,
+    tertiary: Colors.grey.shade600,
     onPrimary: const Color.fromRGBO(
         255, 255, 255, 1), // White color for text on dark theme primary
     onBackground: Colors.white,

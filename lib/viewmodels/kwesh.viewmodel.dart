@@ -6,8 +6,6 @@ import 'package:kweshtion_basic/views/widgets/kwesh.details.widget.dart';
 
 class KweshViewModel extends ChangeNotifier {
   KweshModel kwesh;
-  String? answer;
-  String? _selectedAnswer;
   final PageController pageController;
   final KweshService _kweshService = KweshService.injected();
   final int pageIndex;
@@ -16,7 +14,7 @@ class KweshViewModel extends ChangeNotifier {
       {required this.kwesh,
       required this.pageController,
       required this.pageIndex}) {
-    getKwesh();
+    getKwesh().then((value) => notifyListeners());
   }
 
   factory KweshViewModel.init(
@@ -33,16 +31,11 @@ class KweshViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedAnswer(String answerId) {
-    _selectedAnswer = answerId;
-    notifyListeners();
-  }
-
-  Future<void> answerKwesh() async {
-    await _kweshService.answerKwesh(kwesh.id, selectedAnswer!);
+  Future<void> answerKwesh(String answerId) async {
+    await _kweshService.answerKwesh(kwesh.id, answerId);
     // Add one vote to the answer
     final answerIndex =
-        kwesh.answers.indexWhere((element) => element.id == selectedAnswer);
+        kwesh.answers.indexWhere((element) => element.id == answerId);
 
     kwesh = kwesh.copyWith(
       answers: [
@@ -51,16 +44,21 @@ class KweshViewModel extends ChangeNotifier {
             .copyWith(nbVotes: kwesh.answers[answerIndex].nbVotes + 1),
         ...kwesh.answers.sublist(answerIndex + 1),
       ],
+      answer: answerId,
     );
 
-    answer = selectedAnswer;
-    _selectedAnswer = null;
+    notifyListeners();
+  }
+
+  Future<void> skipKwesh() async {
+    await _kweshService.skipKwesh(kwesh.id);
+    // Add one vote to the answer
+    kwesh = kwesh.copyWith(skipped: true);
     notifyListeners();
   }
 
   void resetAnswer() {
-    answer = null;
-    _selectedAnswer = null;
+    kwesh = kwesh.copyWith(answer: null);
     notifyListeners();
   }
 
@@ -78,13 +76,13 @@ class KweshViewModel extends ChangeNotifier {
                 : element.nbVotes.toString().length,
       );
 
-  get selectedAnswer => _selectedAnswer;
-
   get maxVote => kwesh.answers.fold(
         0,
         (previousValue, element) =>
             previousValue > element.nbVotes ? previousValue : element.nbVotes,
       );
+
+  String? get answer => kwesh.answer;
 
   void showDetails(BuildContext context) {
     showModalBottomSheet(
@@ -113,5 +111,9 @@ class KweshViewModel extends ChangeNotifier {
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
+  }
+
+  void likeCategory() {
+    // TODO LIKE
   }
 }
