@@ -21,15 +21,26 @@ class HistoryPage extends StatelessWidget {
             length: 2,
             child: Scaffold(
               appBar: AppBar(
-                title: const TabBar(
+                title: TabBar(
+                  indicatorColor: Colors.amber.shade700,
+                  indicatorWeight: 2,
+                  labelColor: Theme.of(context).colorScheme.onPrimary,
+                  unselectedLabelColor:
+                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
                   tabs: [
-                    Tab(text: "Answered"),
-                    Tab(text: "Unanswered"),
+                    Tab(
+                      text: "Answered",
+                      icon: Icon(Icons.check_circle),
+                    ),
+                    Tab(
+                      text: "Posted",
+                      icon: Icon(Icons.question_answer),
+                    ),
                   ],
                 ),
                 bottom: // Search bar
                     PreferredSize(
-                  preferredSize: const Size.fromHeight(48),
+                  preferredSize: const Size.fromHeight(72),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
