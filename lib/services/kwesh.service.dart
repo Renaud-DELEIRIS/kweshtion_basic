@@ -57,7 +57,7 @@ class KweshService {
       updatedAt: DateTime.now(),
       category: CategoryModel(
         like: 20,
-        id: '1',
+        id: 'life',
         author: UserModel(
           createdAt: DateTime.now(),
           email: 'renauddeliris@gmail.com',

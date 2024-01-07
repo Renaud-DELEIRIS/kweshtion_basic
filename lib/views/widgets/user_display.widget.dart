@@ -12,17 +12,20 @@ class UserDisplayWidget extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CircleAvatar(
-          backgroundImage:
-              user.avatar != null ? NetworkImage(user.avatar!) : null,
-          radius: 12,
-          backgroundColor: Colors.primaries[user.username.length % 10],
-          child: Text(
-            user.username[0].toUpperCase(),
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
+        Hero(
+          tag: user.id,
+          child: CircleAvatar(
+            backgroundImage:
+                user.avatar != null ? NetworkImage(user.avatar!) : null,
+            radius: 12,
+            backgroundColor: Colors.primaries[user.username.length % 10],
+            child: Text(
+              user.username[0].toUpperCase(),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
             ),
           ),
         ),

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/viewmodels/kwesh.viewmodel.dart';
+import 'package:kweshtion_basic/viewmodels/kwesh_list.viewmodel.dart';
 
 class KweshDetailsWidget extends StatelessWidget {
-  const KweshDetailsWidget({Key? key, required this.kweshViewModel})
+  const KweshDetailsWidget(
+      {Key? key,
+      required this.kweshViewModel,
+      required this.kweshListViewModel})
       : super(key: key);
   final KweshViewModel kweshViewModel;
+  final KweshListViewModel kweshListViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +59,42 @@ class KweshDetailsWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                TextButton(
+                  onPressed: () {
+                    kweshListViewModel
+                        .changeTag()
+                        .then((value) => Navigator.of(context).pop());
+                  },
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.all(0),
+                    ),
+                    overlayColor: MaterialStateProperty.all(
+                      Colors.grey.withOpacity(0.1),
+                    ),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.grid_view_sharp,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                        const SizedBox(width: 10),
+                        Flexible(
+                          child: Text(
+                            'Changer le filtre ${kweshListViewModel.tag != null ? "(${kweshListViewModel.tag})" : ""}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
                   height: 0.5,
                   color: Colors.grey,

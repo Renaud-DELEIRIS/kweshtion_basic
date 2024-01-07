@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/api/models/response/answer.model.dart';
 import 'package:kweshtion_basic/api/models/response/kwesh_history.model.dart';
+import 'package:kweshtion_basic/config/app_router.dart';
 import 'package:kweshtion_basic/views/widgets/kwesh/kwesh_answer.widget.dart';
 import 'package:kweshtion_basic/views/widgets/tag.widget.dart';
 
@@ -36,18 +38,12 @@ class HistoryButtonWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: (TextButton(
-        // onPressed: () => AutoRouter.of(context).navigateNamed(
-        //     e.type == SearchType.user
-        //         ? '/user/${e.targetId}'
-        //         : '/category/${e.targetId}'),
-
+        onPressed: () => AutoRouter.of(context).push(HomeRoute(startId: "2")),
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(
             Colors.grey.withOpacity(0.1),
           ),
         ),
-
-        onPressed: () {},
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,25 +74,42 @@ class HistoryButtonWidget extends StatelessWidget {
                     height: 5,
                   ),
                   // Total vote
-                  Text.rich(
-                    TextSpan(
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontSize: 11,
-                      ),
-                      children: [
+                  Row(
+                    children: [
+                      Text.rich(
                         TextSpan(
-                          text: totalVote.toString(),
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary,
                             fontSize: 11,
                           ),
+                          children: [
+                            TextSpan(
+                              text: totalVote.toString(),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                fontSize: 11,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " vote${totalVote > 1 ? "s" : ""}",
+                            ),
+                          ],
                         ),
-                        TextSpan(
-                          text: " vote${totalVote > 1 ? "s" : ""}",
+                      ),
+                      if (history.kwesh.expiresAt != null)
+                        Text(
+                          " - ",
+                          style: TextStyle(color: Colors.grey.shade400),
                         ),
-                      ],
-                    ),
+                      if (history.kwesh.expiresAt != null)
+                        Text(
+                          "7 days left",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 11,
+                          ),
+                        ),
+                    ],
                   ),
 
                   const SizedBox(

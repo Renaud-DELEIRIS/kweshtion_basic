@@ -15,6 +15,25 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    BottomBarRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BottomBarPage(),
+      );
+    },
+    CreateCategoryRoute.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<CreateCategoryRouteArgs>(
+          orElse: () =>
+              CreateCategoryRouteArgs(name: queryParams.optString('name')));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CreateCategoryPage(
+          key: args.key,
+          name: args.name,
+        ),
+      );
+    },
     HistoryRoute.name: (routeData) {
       final args = routeData.argsAs<HistoryRouteArgs>(
           orElse: () => const HistoryRouteArgs());
@@ -23,18 +42,44 @@ abstract class _$AppRouter extends RootStackRouter {
         child: HistoryPage(key: args.key),
       );
     },
-    HomeRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
+    HistoryRootRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: HomePage(key: args.key),
+        child: const HistoryRootPage(),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<HomeRouteArgs>(
+          orElse: () => HomeRouteArgs(
+                startId: queryParams.optString('startId'),
+                category: queryParams.optString('category'),
+              ));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: HomePage(
+          key: args.key,
+          startId: args.startId,
+          category: args.category,
+        ),
+      );
+    },
+    HomeRootRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HomeRootPage(),
       );
     },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginPage(),
+      );
+    },
+    ProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfilePage(),
       );
     },
     SearchRoute.name: (routeData) {
@@ -45,7 +90,66 @@ abstract class _$AppRouter extends RootStackRouter {
         child: SearchPage(key: args.key),
       );
     },
+    SearchRootRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SearchRootPage(),
+      );
+    },
   };
+}
+
+/// generated route for
+/// [BottomBarPage]
+class BottomBarRoute extends PageRouteInfo<void> {
+  const BottomBarRoute({List<PageRouteInfo>? children})
+      : super(
+          BottomBarRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BottomBarRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CreateCategoryPage]
+class CreateCategoryRoute extends PageRouteInfo<CreateCategoryRouteArgs> {
+  CreateCategoryRoute({
+    Key? key,
+    String? name,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CreateCategoryRoute.name,
+          args: CreateCategoryRouteArgs(
+            key: key,
+            name: name,
+          ),
+          rawQueryParams: {'name': name},
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateCategoryRoute';
+
+  static const PageInfo<CreateCategoryRouteArgs> page =
+      PageInfo<CreateCategoryRouteArgs>(name);
+}
+
+class CreateCategoryRouteArgs {
+  const CreateCategoryRouteArgs({
+    this.key,
+    this.name,
+  });
+
+  final Key? key;
+
+  final String? name;
+
+  @override
+  String toString() {
+    return 'CreateCategoryRouteArgs{key: $key, name: $name}';
+  }
 }
 
 /// generated route for
@@ -78,14 +182,38 @@ class HistoryRouteArgs {
 }
 
 /// generated route for
+/// [HistoryRootPage]
+class HistoryRootRoute extends PageRouteInfo<void> {
+  const HistoryRootRoute({List<PageRouteInfo>? children})
+      : super(
+          HistoryRootRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HistoryRootRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
   HomeRoute({
     Key? key,
+    String? startId,
+    String? category,
     List<PageRouteInfo>? children,
   }) : super(
           HomeRoute.name,
-          args: HomeRouteArgs(key: key),
+          args: HomeRouteArgs(
+            key: key,
+            startId: startId,
+            category: category,
+          ),
+          rawQueryParams: {
+            'startId': startId,
+            'category': category,
+          },
           initialChildren: children,
         );
 
@@ -95,14 +223,36 @@ class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
 }
 
 class HomeRouteArgs {
-  const HomeRouteArgs({this.key});
+  const HomeRouteArgs({
+    this.key,
+    this.startId,
+    this.category,
+  });
 
   final Key? key;
 
+  final String? startId;
+
+  final String? category;
+
   @override
   String toString() {
-    return 'HomeRouteArgs{key: $key}';
+    return 'HomeRouteArgs{key: $key, startId: $startId, category: $category}';
   }
+}
+
+/// generated route for
+/// [HomeRootPage]
+class HomeRootRoute extends PageRouteInfo<void> {
+  const HomeRootRoute({List<PageRouteInfo>? children})
+      : super(
+          HomeRootRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRootRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -115,6 +265,20 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfilePage]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -145,4 +309,18 @@ class SearchRouteArgs {
   String toString() {
     return 'SearchRouteArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [SearchRootPage]
+class SearchRootRoute extends PageRouteInfo<void> {
+  const SearchRootRoute({List<PageRouteInfo>? children})
+      : super(
+          SearchRootRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchRootRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

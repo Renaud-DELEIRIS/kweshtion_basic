@@ -7,7 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class CreatePage extends StatefulWidget {
-  const CreatePage({super.key});
+  final String? category;
+  const CreatePage({
+    super.key,
+    this.category,
+  });
 
   @override
   State<CreatePage> createState() => _CreatePageState();
@@ -50,7 +54,8 @@ class _CreatePageState extends State<CreatePage> {
                   initialValue: const {
                     'question': '',
                     'answers': '',
-                    'days': '2',
+                    'days': '',
+                    'anonymous': false
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,6 +79,14 @@ class _CreatePageState extends State<CreatePage> {
                         ],
                       ),
 
+                      if (widget.category != null)
+                        Text(
+                          "You are about to publish in ${widget.category}",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
                       const SizedBox(height: 20),
 
                       TextinputWidget(
@@ -89,6 +102,10 @@ class _CreatePageState extends State<CreatePage> {
                           FormBuilderValidators.minLength(
                             KweshConstant.QUESTION_MIN_LENGTH,
                           ),
+                          (value) {
+                            if (value!.endsWith("?")) return null;
+                            return "Question should finish with a '?'";
+                          }
                         ]),
                         autofocus: true,
                         hint: "Question",
@@ -152,14 +169,30 @@ class _CreatePageState extends State<CreatePage> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         label: "Days to vote",
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
                           FormBuilderValidators.numeric(),
                           FormBuilderValidators.min(1),
-                          FormBuilderValidators.max(7),
+                          FormBuilderValidators.max(31),
                         ]),
-                        required: true,
-                        hint: "2",
+                        required: false,
+                        hint: "Let empty to be infinite",
                         keyboardType: TextInputType.number,
+                      ),
+
+                      FormBuilderSwitch(
+                        name: "anonymous",
+                        title: const Text(
+                          "Is anonymous",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        activeColor: Colors.amber.shade700,
+                        subtitle: const Text(
+                          "Your username wont appear on the kwesh",
+                        ),
+                        decoration:
+                            const InputDecoration(border: InputBorder.none),
                       ),
 
                       const SizedBox(height: 10),
@@ -169,9 +202,12 @@ class _CreatePageState extends State<CreatePage> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.amber.shade700,
-                              foregroundColor: Colors.white,
-                            ),
+                                backgroundColor: Colors.amber.shade700,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 36,
+                                  vertical: 6,
+                                )),
                             onPressed: vm.isValid ? () => vm.onPost() : null,
                             child: const Text("Post"),
                           ),

@@ -5,6 +5,8 @@ ThemeData lightTheme = ThemeData(
   bottomAppBarTheme: const BottomAppBarTheme(
     color: Colors.black,
   ),
+  scaffoldBackgroundColor: Colors.grey.shade50,
+  indicatorColor: Colors.grey.shade800,
   colorScheme: ColorScheme.light(
     background: Colors.grey.shade50,
     // #373c3f
@@ -14,10 +16,11 @@ ThemeData lightTheme = ThemeData(
     // #1C1C1C
     onPrimary: const Color.fromRGBO(28, 28, 28, 1),
     // #1a1a1b
+    onSecondary: const Color.fromRGBO(26, 26, 27, 1),
     onBackground: const Color.fromRGBO(26, 26, 27, 1),
   ),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.white,
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.grey.shade50,
     elevation: 0,
     foregroundColor: Colors.black,
     scrolledUnderElevation: 0,

@@ -2,27 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/api/models/response/answer.model.dart';
 import 'package:kweshtion_basic/api/models/response/kwesh.model.dart';
 import 'package:kweshtion_basic/services/kwesh.service.dart';
+import 'package:kweshtion_basic/viewmodels/kwesh_list.viewmodel.dart';
 import 'package:kweshtion_basic/views/widgets/kwesh.details.widget.dart';
 
 class KweshViewModel extends ChangeNotifier {
   KweshModel kwesh;
-  final PageController pageController;
+  final KweshListViewModel kweshListViewModel;
   final KweshService _kweshService = KweshService.injected();
   final int pageIndex;
 
   KweshViewModel(
       {required this.kwesh,
-      required this.pageController,
-      required this.pageIndex}) {
+      required this.pageIndex,
+      required this.kweshListViewModel}) {
     getKwesh().then((value) => notifyListeners());
   }
 
   factory KweshViewModel.init(
-      KweshModel kwesh, PageController controller, int pageIndex) {
+      KweshModel kwesh, int pageIndex, KweshListViewModel listVm) {
     return KweshViewModel(
       kwesh: kwesh,
-      pageController: controller,
       pageIndex: pageIndex,
+      kweshListViewModel: listVm,
     );
   }
 
@@ -91,26 +92,17 @@ class KweshViewModel extends ChangeNotifier {
       showDragHandle: true,
       builder: (context) => KweshDetailsWidget(
         kweshViewModel: this,
+        kweshListViewModel: kweshListViewModel,
       ),
     );
   }
 
   void reportKwesh() {
-    // Scroll to the next page
-    pageController.animateToPage(
-      pageIndex + 1,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
+    kweshListViewModel.scrollOne(pageIndex);
   }
 
   void hideAuthorKwesh() {
-    // Scroll to the next page
-    pageController.animateToPage(
-      pageIndex + 1,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
+    kweshListViewModel.scrollOne(pageIndex);
   }
 
   void likeCategory() {

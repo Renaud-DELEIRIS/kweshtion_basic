@@ -17,26 +17,22 @@ class SearchService {
         type: SearchType.category,
         displayName: "Categorie 1",
         targetId: "1",
-        isHot: true,
         like: 10,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 1",
         targetId: "1",
-        isHot: true,
       ),
       SearchModel(
         type: SearchType.category,
         displayName: "Categorie 2",
         targetId: "1",
-        isHot: false,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 2",
         targetId: "1",
-        isHot: false,
       ),
     ];
   }
@@ -47,56 +43,47 @@ class SearchService {
         type: SearchType.category,
         displayName: "Categorie 1",
         targetId: "1",
-        isHot: true,
         like: 10,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 1",
         targetId: "1",
-        isHot: true,
       ),
       SearchModel(
         type: SearchType.category,
         displayName: "Categorie 2",
         targetId: "1",
-        isHot: false,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 2",
         targetId: "1",
-        isHot: false,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 2",
         targetId: "1",
-        isHot: false,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 2",
         targetId: "1",
-        isHot: false,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 2",
         targetId: "1",
-        isHot: false,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 2",
         targetId: "1",
-        isHot: false,
       ),
       SearchModel(
         type: SearchType.user,
         displayName: "User 2",
         targetId: "1",
-        isHot: false,
       ),
     ];
   }

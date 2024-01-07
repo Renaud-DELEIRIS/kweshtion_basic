@@ -63,11 +63,11 @@ class KweshAnswerWidget extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: isTheMaxVoted
-                        ? Theme.of(context).colorScheme.primary.withOpacity(0.3)
+                        ? Theme.of(context).colorScheme.primary.withOpacity(0.4)
                         : Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.1),
+                            .withOpacity(0.2),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),

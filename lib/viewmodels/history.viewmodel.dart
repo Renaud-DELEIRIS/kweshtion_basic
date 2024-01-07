@@ -14,6 +14,7 @@ class HistoryViewModel extends ChangeNotifier {
   bool isLoaded = false;
   final HistoryService _historyService = HistoryService.injected();
   Debouncer debouncer = Debouncer(milliseconds: 300);
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
 
   void onSearch() async {
     debouncer.cancel();
@@ -32,7 +33,6 @@ class HistoryViewModel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    // TODO Load user history
     _historyAnswered = await _historyService.loadDefaultRecomendation();
     await Future.delayed(const Duration(seconds: 1));
 
@@ -41,10 +41,27 @@ class HistoryViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  HistoryViewModel({required this.textEditingController}) {
+  Future<void> onRefresh() async {
+    isLoading = true;
+    refreshIndicatorKey.currentState?.show();
+    notifyListeners();
+
+    _historyAnswered = await _historyService.loadDefaultRecomendation();
+    await Future.delayed(const Duration(seconds: 1));
+
+    isLoading = false;
+
+    notifyListeners();
+  }
+
+  HistoryViewModel(
+      {required this.textEditingController,
+      required this.refreshIndicatorKey}) {
     loadHistory();
     textEditingController.addListener(
-      () => debouncer.run(() => onSearch()),
+      () => debouncer.run(
+        () => onSearch(),
+      ),
     );
   }
 
@@ -52,11 +69,14 @@ class HistoryViewModel extends ChangeNotifier {
   void dispose() {
     super.dispose();
     textEditingController.removeListener(onSearch);
+    debouncer.cancel();
   }
 
-  factory HistoryViewModel.init(TextEditingController controller) {
+  factory HistoryViewModel.init(TextEditingController controller,
+      GlobalKey<RefreshIndicatorState> refreshIndicatorKey) {
     return HistoryViewModel(
       textEditingController: controller,
+      refreshIndicatorKey: refreshIndicatorKey,
     );
   }
 

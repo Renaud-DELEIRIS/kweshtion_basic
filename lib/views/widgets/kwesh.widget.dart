@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/viewmodels/kwesh.viewmodel.dart';
+import 'package:kweshtion_basic/viewmodels/kwesh_list.viewmodel.dart';
 import 'package:kweshtion_basic/views/widgets/animated_count.widget.dart';
 import 'package:kweshtion_basic/views/widgets/category_display.widget.dart';
 import 'package:kweshtion_basic/views/widgets/kwesh/kwesh_answer.widget.dart';
@@ -10,26 +11,49 @@ const height = 40.0;
 
 class KweshWidget extends StatelessWidget {
   final KweshViewModel kweshViewModel;
+  final bool displayCategory;
 
-  const KweshWidget({Key? key, required this.kweshViewModel}) : super(key: key);
+  const KweshWidget({
+    Key? key,
+    required this.kweshViewModel,
+    this.displayCategory = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.symmetric(
+        vertical: displayCategory ? 16 : 8,
+        horizontal: 16,
+      ),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                UserDisplayWidget(user: kweshViewModel.kwesh.author),
-                SizedBox(height: kweshViewModel.kwesh.category != null ? 5 : 0),
-                if (kweshViewModel.kwesh.category != null)
-                  CategoryDisplayWidget(
-                    category: kweshViewModel.kwesh.category!,
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    UserDisplayWidget(user: kweshViewModel.kwesh.author),
+                    SizedBox(
+                        height: kweshViewModel.kwesh.category != null &&
+                                displayCategory
+                            ? 5
+                            : 0),
+                    if (kweshViewModel.kwesh.category != null &&
+                        displayCategory)
+                      CategoryDisplayWidget(
+                        category: kweshViewModel.kwesh.category!,
+                      ),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () => kweshViewModel.showDetails(context),
+                  icon: const Icon(Icons.more_horiz),
+                )
               ],
             ),
             const SizedBox(height: 20),
@@ -59,39 +83,53 @@ class KweshWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TagWidget(tag: kweshViewModel.kwesh.tag),
-                IconButton(
-                  onPressed: () => kweshViewModel.showDetails(context),
-                  icon: const Icon(Icons.more_horiz),
-                )
               ],
             ),
 
             const SizedBox(height: 10),
 
             // Total vote
-            Text.rich(
-              TextSpan(
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontSize: 13,
-                ),
-                children: [
-                  WidgetSpan(
-                    alignment: PlaceholderAlignment.middle,
-                    child: AnimatedCount(
-                      count: kweshViewModel.totalVotes,
-                      duration: const Duration(milliseconds: 500),
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontSize: 13,
+            Row(
+              children: [
+                Text.rich(
+                  TextSpan(
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontSize: 13,
+                    ),
+                    children: [
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: AnimatedCount(
+                          count: kweshViewModel.totalVotes,
+                          duration: const Duration(milliseconds: 500),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontSize: 13,
+                          ),
+                        ),
                       ),
+                      TextSpan(
+                        text:
+                            " vote${kweshViewModel.totalVotes > 1 ? "s" : ""}",
+                      ),
+                    ],
+                  ),
+                ),
+                if (kweshViewModel.kwesh.expiresAt != null)
+                  Text(
+                    " - ",
+                    style: TextStyle(color: Colors.grey.shade400),
+                  ),
+                if (kweshViewModel.kwesh.expiresAt != null)
+                  Text(
+                    "7 days left",
+                    style: TextStyle(
+                      color: Colors.grey.shade500,
+                      fontSize: 13,
                     ),
                   ),
-                  TextSpan(
-                    text: " vote${kweshViewModel.totalVotes > 1 ? "s" : ""}",
-                  ),
-                ],
-              ),
+              ],
             ),
 
             const SizedBox(height: 5),

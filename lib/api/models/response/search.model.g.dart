@@ -15,8 +15,6 @@ abstract class _$SearchModelCWProxy {
 
   SearchModel displayName(String displayName);
 
-  SearchModel isHot(bool isHot);
-
   SearchModel like(int? like);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SearchModel(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -30,7 +28,6 @@ abstract class _$SearchModelCWProxy {
     String? targetId,
     String? displayAvatar,
     String? displayName,
-    bool? isHot,
     int? like,
   });
 }
@@ -55,9 +52,6 @@ class _$SearchModelCWProxyImpl implements _$SearchModelCWProxy {
   SearchModel displayName(String displayName) => this(displayName: displayName);
 
   @override
-  SearchModel isHot(bool isHot) => this(isHot: isHot);
-
-  @override
   SearchModel like(int? like) => this(like: like);
 
   @override
@@ -73,7 +67,6 @@ class _$SearchModelCWProxyImpl implements _$SearchModelCWProxy {
     Object? targetId = const $CopyWithPlaceholder(),
     Object? displayAvatar = const $CopyWithPlaceholder(),
     Object? displayName = const $CopyWithPlaceholder(),
-    Object? isHot = const $CopyWithPlaceholder(),
     Object? like = const $CopyWithPlaceholder(),
   }) {
     return SearchModel(
@@ -94,10 +87,6 @@ class _$SearchModelCWProxyImpl implements _$SearchModelCWProxy {
               ? _value.displayName
               // ignore: cast_nullable_to_non_nullable
               : displayName as String,
-      isHot: isHot == const $CopyWithPlaceholder() || isHot == null
-          ? _value.isHot
-          // ignore: cast_nullable_to_non_nullable
-          : isHot as bool,
       like: like == const $CopyWithPlaceholder()
           ? _value.like
           // ignore: cast_nullable_to_non_nullable
@@ -121,7 +110,6 @@ SearchModel _$SearchModelFromJson(Map<String, dynamic> json) => SearchModel(
       targetId: json['targetId'] as String,
       displayAvatar: json['displayAvatar'] as String?,
       displayName: json['displayName'] as String,
-      isHot: json['isHot'] as bool,
       like: json['like'] as int?,
     );
 
@@ -131,7 +119,6 @@ Map<String, dynamic> _$SearchModelToJson(SearchModel instance) =>
       'displayName': instance.displayName,
       'targetId': instance.targetId,
       'displayAvatar': instance.displayAvatar,
-      'isHot': instance.isHot,
       'like': instance.like,
     };
 

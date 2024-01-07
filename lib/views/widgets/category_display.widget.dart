@@ -4,11 +4,19 @@ import 'package:kweshtion_basic/api/models/response/category.model.dart';
 
 class CategoryDisplayWidget extends StatelessWidget {
   final CategoryModel category;
-  final withRedirect;
+  final bool withRedirect;
+  final TextStyle? textStyle;
+  final double? radius;
+  final double? space;
 
-  const CategoryDisplayWidget(
-      {Key? key, required this.category, this.withRedirect = true})
-      : super(key: key);
+  const CategoryDisplayWidget({
+    Key? key,
+    required this.category,
+    this.withRedirect = true,
+    this.textStyle,
+    this.radius = 12,
+    this.space = 5,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +25,12 @@ class CategoryDisplayWidget extends StatelessWidget {
       children: [
         TextButton(
           onPressed: withRedirect
-              ? () => AutoRouter.of(context)
-                  .navigateNamed('/category/${category.id}')
+              ? () {
+                  final router = AutoRouter.of(context);
+                  router.pop();
+                  router.navigateNamed('/home');
+                  router.pushNamed('/home?category=${category.name}');
+                }
               : null,
 
           // Width fit
@@ -31,29 +43,34 @@ class CategoryDisplayWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundImage: category.avatar != null
-                    ? NetworkImage(category.avatar!)
-                    : null,
-                radius: 12,
-                backgroundColor: Colors.primaries[category.name.length % 10],
-                child: Text(
-                  category.name[0].toUpperCase(),
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
+              Hero(
+                tag: '5',
+                transitionOnUserGestures: true,
+                child: CircleAvatar(
+                  backgroundImage: category.avatar != null
+                      ? NetworkImage(category.avatar!)
+                      : null,
+                  radius: radius,
+                  backgroundColor: Colors.primaries[category.name.length % 10],
+                  child: Text(
+                    category.name[0].toUpperCase(),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: radius,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(width: 5),
+              SizedBox(width: space),
               Text(
                 category.name,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                ),
+                style: textStyle ??
+                    TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
               ),
               const SizedBox(width: 5),
             ],

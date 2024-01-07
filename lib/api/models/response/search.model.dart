@@ -13,7 +13,6 @@ class SearchModel {
     required this.targetId,
     this.displayAvatar,
     required this.displayName,
-    required this.isHot,
     this.like,
   });
 
@@ -24,7 +23,6 @@ class SearchModel {
   final String displayName;
   final String targetId;
   final String? displayAvatar;
-  final bool isHot;
   final int? like;
 
   Map<String, dynamic> toJson() => _$SearchModelToJson(this);
