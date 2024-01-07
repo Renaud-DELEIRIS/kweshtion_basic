@@ -5,6 +5,7 @@ import 'package:kweshtion_basic/api/models/response/search.model.dart';
 import 'package:kweshtion_basic/config/app_router.dart';
 import 'package:kweshtion_basic/services/search.service.dart';
 import 'package:kweshtion_basic/utils/debounce.dart';
+import 'package:kweshtion_basic/views/widgets/search/search_option.widget.dart';
 
 class SearchViewModel extends ChangeNotifier {
   TextEditingController textEditingController;
@@ -80,45 +81,53 @@ class SearchViewModel extends ChangeNotifier {
   List<SearchModel> get searchData => _searchData;
 
   // Filter only hot topics from search data
-  Future<String> changeTag() async {
-    // Select
-    final selectedItem = await FlutterNativeSelect.openSelect(
-      items: [
-        const NativeSelectItem(value: 'item0', label: 'Item 0'),
-        const NativeSelectItem(value: 'item1', label: 'Item 1'),
-        const NativeSelectItem(value: 'item2', label: 'Item 2'),
-        NativeSelectItem(
-          value: 'disabled1',
-          label: 'Disabled item 1',
-          disabled: true,
-          color: Colors.red[900],
-        ),
-        const NativeSelectItem(
-          value: 'disabled2',
-          label: 'Disabled item 2',
-          disabled: true,
-        ),
-        const NativeSelectItem(
-          value: 'disabled3',
-          label: 'Disabled item 3',
-          disabled: true,
-        ),
-        NativeSelectItem(
-          value: 'blue',
-          label: 'Blue item',
-          color: Colors.blue[900],
-        ),
-      ],
-    );
+  // Future<String> changeTag() async {
+  //   // Select
+  //   final selectedItem = await FlutterNativeSelect.openSelect(
+  //     items: [
+  //       const NativeSelectItem(value: 'item0', label: 'Item 0'),
+  //       const NativeSelectItem(value: 'item1', label: 'Item 1'),
+  //       const NativeSelectItem(value: 'item2', label: 'Item 2'),
+  //       NativeSelectItem(
+  //         value: 'disabled1',
+  //         label: 'Disabled item 1',
+  //         disabled: true,
+  //         color: Colors.red[900],
+  //       ),
+  //       const NativeSelectItem(
+  //         value: 'disabled2',
+  //         label: 'Disabled item 2',
+  //         disabled: true,
+  //       ),
+  //       const NativeSelectItem(
+  //         value: 'disabled3',
+  //         label: 'Disabled item 3',
+  //         disabled: true,
+  //       ),
+  //       NativeSelectItem(
+  //         value: 'blue',
+  //         label: 'Blue item',
+  //         color: Colors.blue[900],
+  //       ),
+  //     ],
+  //   );
 
-    if (selectedItem == null) {
-      print('User cleared or dismissed the dialog');
-    } else {
-      print('User selected: $selectedItem');
-    }
-    // TODO RESEARCH
-    notifyListeners();
+  //   if (selectedItem == null) {
+  //     print('User cleared or dismissed the dialog');
+  //   } else {
+  //     print('User selected: $selectedItem');
+  //   }
+  //   // TODO RESEARCH
+  //   notifyListeners();
 
-    return '';
+  //   return '';
+  // }
+
+  void openOption(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        showDragHandle: true,
+        builder: (context) => SearchOptionWidget(searchViewModel: this));
   }
 }

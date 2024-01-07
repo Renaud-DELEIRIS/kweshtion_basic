@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/api/models/response/search.model.dart';
+import 'package:kweshtion_basic/config/app_router.dart';
 
 class SearchButtonWidget extends StatelessWidget {
   final SearchModel search;
@@ -10,18 +12,14 @@ class SearchButtonWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: (TextButton(
-        // onPressed: () => AutoRouter.of(context).navigateNamed(
-        //     e.type == SearchType.user
-        //         ? '/user/${e.targetId}'
-        //         : '/category/${e.targetId}'),
-
+        onPressed: () => AutoRouter.of(context).push(HomeRoute(
+          category: search.targetId,
+        )),
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(
             Colors.grey.withOpacity(0.1),
           ),
         ),
-
-        onPressed: () {},
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

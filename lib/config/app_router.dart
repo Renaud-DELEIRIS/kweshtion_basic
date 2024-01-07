@@ -1,12 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:kweshtion_basic/views/page/auth/auth_root.page.dart';
+import 'package:kweshtion_basic/views/page/auth/login.page.dart';
+import 'package:kweshtion_basic/views/page/auth/register.page.dart';
 import 'package:kweshtion_basic/views/page/bottom_bar.page.dart';
 import 'package:kweshtion_basic/views/page/history/history_root.page.dart';
 import 'package:kweshtion_basic/views/page/home/home_root.page.dart';
 import 'package:kweshtion_basic/views/page/search/create_category.page.dart';
 import 'package:kweshtion_basic/views/page/history/history.page.dart';
 import 'package:kweshtion_basic/views/page/home/home.page.dart';
-import 'package:kweshtion_basic/views/page/login.page.dart';
 import 'package:kweshtion_basic/views/page/profile.page.dart';
 import 'package:kweshtion_basic/views/page/search/search.page.dart';
 import 'package:kweshtion_basic/views/page/search/search_root.page.dart';
@@ -64,6 +66,10 @@ class AppRouter extends _$AppRouter {
                   page: CreateCategoryRoute.page,
                   path: "create",
                 ),
+                AutoRoute(
+                  page: HomeRoute.page,
+                  path: "kwesh",
+                ),
               ],
             ),
             AutoRoute(
@@ -75,6 +81,21 @@ class AppRouter extends _$AppRouter {
               path: "profile",
             ),
           ],
-        )
+        ),
+        AutoRoute(
+          page: AuthRootRoute.page,
+          path: "/auth",
+          children: [
+            AutoRoute(
+              page: LoginRoute.page,
+              path: "login",
+              initial: true,
+            ),
+            AutoRoute(
+              page: RegisterRoute.page,
+              path: "register",
+            )
+          ],
+        ),
       ];
 }

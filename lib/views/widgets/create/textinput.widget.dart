@@ -14,6 +14,7 @@ class TextinputWidget extends StatelessWidget {
   final String name;
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
+  final bool? obscureText;
   const TextinputWidget({
     Key? key,
     required this.required,
@@ -28,6 +29,7 @@ class TextinputWidget extends StatelessWidget {
     this.textInputAction,
     this.validator,
     this.autovalidateMode,
+    this.obscureText,
   }) : super(key: key);
 
   @override
@@ -66,6 +68,7 @@ class TextinputWidget extends StatelessWidget {
             validator: validator,
             autovalidateMode: autovalidateMode,
             autofocus: autofocus ?? false,
+            obscureText: obscureText ?? false,
             // Change the color of the
             cursorColor: Theme.of(context).colorScheme.onPrimary,
             decoration: InputDecoration(

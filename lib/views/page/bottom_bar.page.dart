@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kweshtion_basic/config/app_router.dart';
+import 'package:kweshtion_basic/views/page/auth/auth_root.page.dart';
 import 'package:kweshtion_basic/views/page/create.page.dart';
 
 @RoutePage()
 class BottomBarPage extends StatelessWidget {
+  final bool loged = false;
   const BottomBarPage({Key? key}) : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class BottomBarPage extends StatelessWidget {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             floatingActionButton: FloatingActionButton(
+              shape: const CircleBorder(),
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
@@ -97,7 +100,11 @@ class BottomBarPage extends StatelessWidget {
                   IconButton(
                     iconSize: 28,
                     onPressed: () {
-                      tabsRouter.setActiveIndex(3);
+                      if (loged) {
+                        tabsRouter.setActiveIndex(3);
+                      } else {
+                        AutoRouter.of(context).push(AuthRootRoute());
+                      }
                     },
                     icon: Icon(
                       Icons.person,

@@ -54,8 +54,8 @@ class SearchPage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: vm.changeTag,
-                  icon: const Icon(Icons.grid_view_sharp),
+                  onPressed: () => vm.openOption(context),
+                  icon: const Icon(Icons.settings),
                 )
               ],
             ),

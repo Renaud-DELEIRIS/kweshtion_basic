@@ -1,20 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:kweshtion_basic/config/app_router.dart';
 
-class CreateViewModel extends ChangeNotifier {
-  final GlobalKey<FormBuilderState> formKey;
+class AuthViewModel extends ChangeNotifier {
+  AuthViewModel();
 
-  CreateViewModel({
-    required this.formKey,
-  });
-
-  void onPost(BuildContext context) {
+  void onPost(GlobalKey<FormBuilderState> formKey) {
     // TODO Post the kwesh
     // Answer controller is a string with comma or linebreak separated answers
-    // remove white spaces*
-    AutoRouter.of(context).push(AuthRootRoute());
+    // remove white spaces
     return;
 
     final String answers = formKey.currentState!.fields['answers']!.value;
@@ -33,9 +27,6 @@ class CreateViewModel extends ChangeNotifier {
   }
 
   void onCancel(BuildContext context) {
-    Navigator.pop(context);
+    AutoRouter.of(context).pop();
   }
-
-  bool get isValid =>
-      formKey.currentState != null ? formKey.currentState!.isValid : false;
 }

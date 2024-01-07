@@ -29,7 +29,6 @@ class HomePage extends StatelessWidget {
       ),
       builder: (context, _) {
         final listViewModel = Provider.of<KweshListViewModel>(context);
-        print("category : $category");
         return Scaffold(
           appBar: listViewModel.category != null
               ? AppBar(
@@ -47,6 +46,7 @@ class HomePage extends StatelessWidget {
                     space: 10,
                   ),
                   centerTitle: false,
+                  titleSpacing: 0,
                 )
               : null,
           body: SafeArea(

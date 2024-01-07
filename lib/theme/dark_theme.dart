@@ -13,7 +13,7 @@ ThemeData darkTheme = ThemeData(
     secondary: Colors.grey.shade700,
     tertiary: Colors.grey.shade600,
     onPrimary: const Color.fromRGBO(255, 255, 255, 1),
-    onSecondary: const Color.fromRGBO(240, 240, 240, 1),
+    onSecondary: const Color.fromRGBO(220, 220, 220, 1),
     onBackground: Colors.white,
   ),
   appBarTheme: AppBarTheme(

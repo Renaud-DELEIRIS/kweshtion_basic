@@ -208,7 +208,8 @@ class _CreatePageState extends State<CreatePage> {
                                   horizontal: 36,
                                   vertical: 6,
                                 )),
-                            onPressed: vm.isValid ? () => vm.onPost() : null,
+                            onPressed:
+                                vm.isValid ? () => vm.onPost(context) : null,
                             child: const Text("Post"),
                           ),
                         ],
