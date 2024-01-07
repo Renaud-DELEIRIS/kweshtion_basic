@@ -17,12 +17,21 @@ class HistoryPage extends StatelessWidget {
             HistoryViewModel.init(_textEditingController, _refreshIndicatorKey),
         builder: (context, _) {
           final vm = Provider.of<HistoryViewModel>(context);
-          return Scaffold(
-            appBar: AppBar(
-              title: // Search bar
-                  Row(
-                children: [
-                  Expanded(
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                title: const TabBar(
+                  tabs: [
+                    Tab(text: "Answered"),
+                    Tab(text: "Unanswered"),
+                  ],
+                ),
+                bottom: // Search bar
+                    PreferredSize(
+                  preferredSize: const Size.fromHeight(48),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       textInputAction: TextInputAction.search,
                       controller: _textEditingController,
@@ -59,72 +68,124 @@ class HistoryPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.grid_view_sharp),
-                  )
-                ],
+                ),
               ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.only(
-                top: 8,
-                left: 8,
-                right: 8,
-              ),
-              child: RefreshIndicator(
-                key: _refreshIndicatorKey,
-                color: Theme.of(context).indicatorColor,
-                onRefresh: () async {
-                  await vm.onRefresh();
-                },
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    if (!vm.isLoaded) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16,
-                          horizontal: 8,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(
-                              color: Theme.of(context).indicatorColor,
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    if (vm.historyAnswered.isEmpty) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16,
-                          horizontal: 8,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Aucune donnée trouvé pour votre recherche",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return HistoryButtonWidget(
-                        history: vm.historyAnswered[index]);
+              body: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  left: 8,
+                  right: 8,
+                ),
+                child: RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  color: Theme.of(context).indicatorColor,
+                  onRefresh: () async {
+                    await vm.onRefresh();
                   },
-                  itemCount: vm.isLoaded
-                      ? vm.historyAnswered.isEmpty
-                          ? 1
-                          : vm.historyAnswered.length
-                      : 1,
+                  child: TabBarView(
+                    children: [
+                      ListView.builder(
+                        itemBuilder: (context, index) {
+                          if (!vm.isLoaded) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 8,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(
+                                    color: Theme.of(context).indicatorColor,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          if (vm.historyAnswered.isEmpty) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 8,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Aucune donnée trouvé pour votre recherche",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return HistoryButtonWidget(
+                              history: vm.historyAnswered[index]);
+                        },
+                        itemCount: vm.isLoaded
+                            ? vm.historyAnswered.isEmpty
+                                ? 1
+                                : vm.historyAnswered.length
+                            : 1,
+                      ),
+                      ListView.builder(
+                        itemBuilder: (context, index) {
+                          if (!vm.isLoaded) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 8,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(
+                                    color: Theme.of(context).indicatorColor,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          if (vm.historyAnswered.isEmpty) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 8,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Aucune donnée trouvé pour votre recherche",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return HistoryButtonWidget(
+                              history: vm.historyAnswered[index]);
+                        },
+                        itemCount: vm.isLoaded
+                            ? vm.historyAnswered.isEmpty
+                                ? 1
+                                : vm.historyAnswered.length
+                            : 1,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
