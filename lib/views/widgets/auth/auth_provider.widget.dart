@@ -22,6 +22,8 @@ class AuthProviderWidget extends StatelessWidget {
               // Oveflow hidden
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32)),
               ),
               child: Image.asset(
                 'assets/logo/google.png',
@@ -35,6 +37,8 @@ class AuthProviderWidget extends StatelessWidget {
               // Oveflow hidden
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32)),
               ),
               child: Image.asset(
                 'assets/logo/apple.png',

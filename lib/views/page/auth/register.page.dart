@@ -26,6 +26,10 @@ class RegisterPage extends StatelessWidget {
                 name: "email",
                 maxLines: 1,
                 hint: "Enter your email",
+                radius: 24,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
               ),
 
               TextinputWidget(
@@ -34,6 +38,10 @@ class RegisterPage extends StatelessWidget {
                 name: "username",
                 maxLines: 1,
                 hint: "Enter your username",
+                radius: 24,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
               ),
               TextinputWidget(
                 required: true,
@@ -42,6 +50,10 @@ class RegisterPage extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 hint: "Enter your password",
+                radius: 24,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
               ),
 
               TextinputWidget(
@@ -51,6 +63,10 @@ class RegisterPage extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 hint: "Confirm your password",
+                radius: 24,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
               ),
 
               const SizedBox(height: 16),
@@ -58,18 +74,20 @@ class RegisterPage extends StatelessWidget {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber.shade700,
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
                   padding: EdgeInsets.all(16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   minimumSize: const Size(double.infinity, 0),
                 ),
-                child: const Text("Register"),
+                child: const Text(
+                  "Register",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               // Do not have an account
               TextButton(

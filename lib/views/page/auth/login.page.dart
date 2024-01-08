@@ -26,6 +26,10 @@ class LoginPage extends StatelessWidget {
                 name: "username",
                 maxLines: 1,
                 hint: "Enter your username",
+                radius: 24,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
               ),
               TextinputWidget(
                 required: true,
@@ -34,24 +38,30 @@ class LoginPage extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 hint: "Enter your password",
+                radius: 24,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber.shade700,
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
                   padding: EdgeInsets.all(16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   minimumSize: const Size(double.infinity, 0),
                 ),
-                child: const Text("Log In"),
+                child: const Text(
+                  "Log In",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               // Do not have an account
               TextButton(

@@ -36,8 +36,15 @@ class _InputWidgetState extends State<InputWidget> {
           widget.multiline ? TextInputType.multiline : TextInputType.text,
       maxLines: widget.multiline ? 3 : 1,
       decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: widget.labelText,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+        hintText: widget.labelText,
         suffixIcon: widget.secure
             ? IconButton(
                 onPressed: () {

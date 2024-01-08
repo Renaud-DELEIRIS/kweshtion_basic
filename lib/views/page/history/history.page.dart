@@ -21,9 +21,14 @@ class HistoryPage extends StatelessWidget {
             length: 2,
             child: Scaffold(
               appBar: AppBar(
+                toolbarHeight: 72,
                 title: TabBar(
-                  indicatorColor: Colors.amber.shade700,
-                  indicatorWeight: 2,
+                  indicator: UnderlineTabIndicator(
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Colors.amber.shade700,
+                    ),
+                  ),
                   labelColor: Theme.of(context).colorScheme.onPrimary,
                   unselectedLabelColor:
                       Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
